@@ -30,4 +30,10 @@ public class CustomerController {
         List<CustomerReadDto> customers = customerService.findAll();
         return ResponseEntity.ok(customers);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        CustomerReadDto customer = customerService.findById(id);
+        return ResponseEntity.ok(customer);
+    }
 }

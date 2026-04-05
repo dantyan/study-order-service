@@ -2,6 +2,7 @@ package kg.megalab.order_service.service.impl;
 
 import kg.megalab.order_service.dto.customer.CustomerCreateDto;
 import kg.megalab.order_service.dto.customer.CustomerReadDto;
+import kg.megalab.order_service.exception.CustomerNotFond;
 import kg.megalab.order_service.model.Customer;
 import kg.megalab.order_service.repo.CustomerRepository;
 import kg.megalab.order_service.service.CustomerService;
@@ -39,7 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerReadDto findById(Long id) {
-        return null;
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFond(id));
+        return toCustomerReadDto(customer);
     }
 
     private CustomerReadDto toCustomerReadDto(Customer customer) {
