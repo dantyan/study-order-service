@@ -1,8 +1,7 @@
 package kg.megalab.order_service.dto.order;
 
 
-public class OrderBaseDto
-{
+public class OrderBaseDto {
     private String description;
     private Double amount;
 

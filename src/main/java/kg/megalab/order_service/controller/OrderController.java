@@ -24,7 +24,7 @@ public class OrderController {
         try {
             OrderReadDto orderReadDto = orderService.save(orderCreateDro);
             return ResponseEntity.ok(orderReadDto);
-        }  catch (CustomerNotFound e) {
+        } catch (CustomerNotFound e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -40,8 +40,7 @@ public class OrderController {
         try {
             OrderReadDto orderReadDto = orderService.findById(id);
             return ResponseEntity.ok(orderReadDto);
-        }
-        catch (OrderNotFound e) {
+        } catch (OrderNotFound e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -51,8 +50,7 @@ public class OrderController {
         try {
             List<OrderReadDto> orderReadDto = orderService.findByCustomerId(customerId);
             return ResponseEntity.ok(orderReadDto);
-        }
-        catch (CustomerNotFound e) {
+        } catch (CustomerNotFound e) {
             return ResponseEntity.notFound().build();
         }
     }

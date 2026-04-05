@@ -4,9 +4,8 @@ package kg.megalab.order_service.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="orders")
-public class Order
-{
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue
     private Long id;

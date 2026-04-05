@@ -34,10 +34,10 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        try{
+        try {
             CustomerReadDto customer = customerService.findById(id);
             return ResponseEntity.ok(customer);
-        } catch(CustomerNotFound exc) {
+        } catch (CustomerNotFound exc) {
             return ResponseEntity.notFound().build();
         }
     }
