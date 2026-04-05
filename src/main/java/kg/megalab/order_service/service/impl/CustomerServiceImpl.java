@@ -6,6 +6,7 @@ import kg.megalab.order_service.exception.CustomerNotFound;
 import kg.megalab.order_service.model.Customer;
 import kg.megalab.order_service.repo.CustomerRepository;
 import kg.megalab.order_service.service.CustomerService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerReadDto toCustomerReadDto(Customer customer) {
+    public @NonNull CustomerReadDto toCustomerReadDto(@NonNull Customer customer) {
         CustomerReadDto customerReadDto = new CustomerReadDto();
         customerReadDto.setId(customer.getId());
         customerReadDto.setName(customer.getName());

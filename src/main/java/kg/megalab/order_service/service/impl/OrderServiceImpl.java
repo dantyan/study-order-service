@@ -11,6 +11,7 @@ import kg.megalab.order_service.repo.CustomerRepository;
 import kg.megalab.order_service.repo.OrderRepository;
 import kg.megalab.order_service.service.CustomerService;
 import kg.megalab.order_service.service.OrderService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +61,8 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByCustomerId(customerId).stream().map(this::toOrderReadDto).toList();
     }
 
-    private OrderReadDto toOrderReadDto(Order order) {
+    @Override
+    public @NonNull OrderReadDto toOrderReadDto(@NonNull Order order) {
         OrderReadDto orderReadDto = new OrderReadDto();
         orderReadDto.setId(order.getId());
         orderReadDto.setDescription(order.getDescription());
