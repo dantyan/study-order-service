@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerReadDto findById(Long id) {
+    public CustomerReadDto findById(Long id) throws CustomerNotFond {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFond(id));
         return toCustomerReadDto(customer);
     }
