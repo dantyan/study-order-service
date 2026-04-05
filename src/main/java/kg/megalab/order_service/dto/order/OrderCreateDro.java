@@ -1,7 +1,15 @@
 package kg.megalab.order_service.dto.order;
 
-import kg.megalab.order_service.dto.customer.CustomerReadDto;
 
 public class OrderCreateDro extends OrderBaseDto {
+    private Long customerId;
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 
 }

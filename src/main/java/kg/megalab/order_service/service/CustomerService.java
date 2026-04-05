@@ -2,7 +2,8 @@ package kg.megalab.order_service.service;
 
 import kg.megalab.order_service.dto.customer.CustomerCreateDto;
 import kg.megalab.order_service.dto.customer.CustomerReadDto;
-import kg.megalab.order_service.exception.CustomerNotFond;
+import kg.megalab.order_service.exception.CustomerNotFound;
+import kg.megalab.order_service.model.Customer;
 
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface CustomerService {
 
     List<CustomerReadDto> findAll();
 
-    CustomerReadDto findById(Long id) throws CustomerNotFond;
+    CustomerReadDto findById(Long id) throws CustomerNotFound;
+
+    CustomerReadDto toCustomerReadDto(Customer customer);
 }

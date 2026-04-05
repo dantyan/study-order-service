@@ -4,7 +4,7 @@ package kg.megalab.order_service.controller;
 import kg.megalab.order_service.dto.customer.CustomerCreateDto;
 import kg.megalab.order_service.dto.customer.CustomerReadDto;
 
-import kg.megalab.order_service.exception.CustomerNotFond;
+import kg.megalab.order_service.exception.CustomerNotFound;
 import kg.megalab.order_service.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class CustomerController {
         try{
             CustomerReadDto customer = customerService.findById(id);
             return ResponseEntity.ok(customer);
-        } catch(CustomerNotFond exc) {
+        } catch(CustomerNotFound exc) {
             return ResponseEntity.notFound().build();
         }
     }

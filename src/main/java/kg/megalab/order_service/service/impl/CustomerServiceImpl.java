@@ -2,7 +2,7 @@ package kg.megalab.order_service.service.impl;
 
 import kg.megalab.order_service.dto.customer.CustomerCreateDto;
 import kg.megalab.order_service.dto.customer.CustomerReadDto;
-import kg.megalab.order_service.exception.CustomerNotFond;
+import kg.megalab.order_service.exception.CustomerNotFound;
 import kg.megalab.order_service.model.Customer;
 import kg.megalab.order_service.repo.CustomerRepository;
 import kg.megalab.order_service.service.CustomerService;
@@ -25,12 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer = customerRepository.save(customer);
 
-        CustomerReadDto customerReadDto = new CustomerReadDto();
-        customerReadDto.setId(customer.getId());
-        customerReadDto.setName(customer.getName());
-        customerReadDto.setEmail(customer.getEmail());
-
-        return customerReadDto;
+        return toCustomerReadDto(customer);
     }
 
     @Override
@@ -39,17 +34,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerReadDto findById(Long id) throws CustomerNotFond {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFond(id));
+    public CustomerReadDto findById(Long id) throws CustomerNotFound {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFound(id));
         return toCustomerReadDto(customer);
     }
 
-    private CustomerReadDto toCustomerReadDto(Customer customer) {
+    @Override
+    public CustomerReadDto toCustomerReadDto(Customer customer) {
         CustomerReadDto customerReadDto = new CustomerReadDto();
         customerReadDto.setId(customer.getId());
         customerReadDto.setName(customer.getName());
         customerReadDto.setEmail(customer.getEmail());
         return customerReadDto;
     }
-
 }
