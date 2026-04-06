@@ -18,7 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public CustomerReadDto save(CustomerCreateDto customerCreateDto) {
+    public Customer save(CustomerCreateDto customerCreateDto) {
 
         Customer customer = new Customer();
         customer.setName(customerCreateDto.getName());
@@ -26,18 +26,17 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer = customerRepository.save(customer);
 
-        return toCustomerReadDto(customer);
+        return customer;
     }
 
     @Override
-    public List<CustomerReadDto> findAll() {
-        return customerRepository.findAll().stream().map(this::toCustomerReadDto).toList();
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 
     @Override
-    public CustomerReadDto findById(Long id) throws CustomerNotFound {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFound(id));
-        return toCustomerReadDto(customer);
+    public Customer findById(Long id) throws CustomerNotFound {
+        return customerRepository.findById(id).orElseThrow(() -> new CustomerNotFound(id));
     }
 
     @Override
