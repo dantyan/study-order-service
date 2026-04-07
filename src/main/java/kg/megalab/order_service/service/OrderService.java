@@ -10,13 +10,13 @@ import org.jspecify.annotations.NonNull;
 import java.util.List;
 
 public interface OrderService {
-    Order save(OrderCreateDro orderCreateDro) throws CustomerNotFound;
+    OrderReadDto save(OrderCreateDro orderCreateDro) throws CustomerNotFound;
 
-    List<Order> findAll();
+    List<OrderReadDto> findAll();
 
-    Order findById(Long id);
+    OrderReadDto findById(Long id);
 
-    List<Order> findByCustomerId(Long customerId);
+    List<OrderReadDto> findByCustomerId(Long customerId);
 
     @NonNull OrderReadDto toOrderReadDto(@NonNull Order order);
 }

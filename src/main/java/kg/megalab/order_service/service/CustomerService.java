@@ -12,11 +12,13 @@ import java.util.List;
 
 public interface CustomerService {
 
-    Customer save(CustomerCreateDto customer);
+    CustomerReadDto save(CustomerCreateDto customer);
 
-    List<Customer> findAll();
+    List<CustomerReadDto> findAll();
 
-    Customer findById(Long id) throws CustomerNotFound;
+    CustomerReadDto findById(Long id) throws CustomerNotFound;
 
     @NonNull CustomerReadDto toCustomerReadDto(@NonNull Customer customer);
+
+    Customer getReference(Long id);
 }

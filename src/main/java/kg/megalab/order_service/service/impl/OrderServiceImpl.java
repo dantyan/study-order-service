@@ -27,34 +27,35 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order save(OrderCreateDro orderCreateDro) throws CustomerNotFound {
+    public OrderReadDto save(OrderCreateDro orderCreateDro) throws CustomerNotFound {
 
         Order order = new Order();
         order.setDescription(orderCreateDro.getDescription());
         order.setAmount(orderCreateDro.getAmount());
 
         Long customerId = orderCreateDro.getCustomerId();
-        Customer customer = customerService.findById(customerId);
+        Customer customer = customerService.getReference(customerId);
 
         order.setCustomer(customer);
         order = orderRepository.save(order);
 
-        return order;
+        return toOrderReadDto(order);
     }
 
     @Override
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<OrderReadDto> findAll() {
+        return orderRepository.findAll().stream().map(this::toOrderReadDto).toList();
     }
 
     @Override
-    public Order findById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new OrderNotFound(id));
+    public OrderReadDto findById(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFound(id));
+        return toOrderReadDto(order);
     }
 
     @Override
-    public List<Order> findByCustomerId(Long customerId) {
-        return orderRepository.findAllByCustomerId(customerId);
+    public List<OrderReadDto> findByCustomerId(Long customerId) {
+        return orderRepository.findAllByCustomerId(customerId).stream().map(this::toOrderReadDto).toList();
     }
 
     @Override

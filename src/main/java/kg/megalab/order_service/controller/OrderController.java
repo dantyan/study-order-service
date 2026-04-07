@@ -1,11 +1,11 @@
 package kg.megalab.order_service.controller;
 
 
+import kg.megalab.order_service.dto.customer.CustomerReadDto;
 import kg.megalab.order_service.dto.order.OrderCreateDro;
 import kg.megalab.order_service.dto.order.OrderReadDto;
 import kg.megalab.order_service.exception.CustomerNotFound;
 import kg.megalab.order_service.exception.OrderNotFound;
-import kg.megalab.order_service.model.Customer;
 import kg.megalab.order_service.service.CustomerService;
 import kg.megalab.order_service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody OrderCreateDro orderCreateDro) {
         try {
-            OrderReadDto orderReadDto = orderService.toOrderReadDto(orderService.save(orderCreateDro));
+            OrderReadDto orderReadDto = orderService.save(orderCreateDro);
             return ResponseEntity.ok(orderReadDto);
         } catch (CustomerNotFound e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -36,14 +36,14 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        List<OrderReadDto> orderReadDto = orderService.findAll().stream().map(order -> orderService.toOrderReadDto(order)).toList();
+        List<OrderReadDto> orderReadDto = orderService.findAll();
         return ResponseEntity.ok(orderReadDto);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
-            OrderReadDto orderReadDto = orderService.toOrderReadDto(orderService.findById(id));
+            OrderReadDto orderReadDto = orderService.findById(id);
             return ResponseEntity.ok(orderReadDto);
         } catch (OrderNotFound e) {
             return ResponseEntity.notFound().build();
@@ -53,8 +53,10 @@ public class OrderController {
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<?> findByCustomerId(@PathVariable Long customerId) {
         try {
-            Customer customer = customerService.findById(customerId);
-            List<OrderReadDto> orderReadDto = orderService.findByCustomerId(customer.getId()).stream().map(order -> orderService.toOrderReadDto(order)).toList();
+            // делаем запрос чтобы убедится что пользователь есть в базе
+            // в противном если пользователя нет, выдает пустой список
+            CustomerReadDto customer = customerService.findById(customerId);
+            List<OrderReadDto> orderReadDto = orderService.findByCustomerId(customer.getId());
             return ResponseEntity.ok(orderReadDto);
         } catch (CustomerNotFound exc) {
             return ResponseEntity.notFound().build();
